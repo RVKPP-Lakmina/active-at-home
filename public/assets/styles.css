@@ -18,6 +18,10 @@ header {
   padding: 15px;
 }
 
+nav {
+  padding: 15px;
+}
+
 nav ul {
   list-style: none;
   padding: 0;
