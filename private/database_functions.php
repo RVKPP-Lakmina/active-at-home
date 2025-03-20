@@ -4,7 +4,7 @@ require_once('credentials.php'); // Ensure credentials are available
 function db_connect()
 {
     try {
-        $database = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+        $database = new mysqli(DB_SERVER, DB_USER, DB_PASS);
     } catch (Exception $e) {
         die("Connection failed: " . $e->getMessage());
     }

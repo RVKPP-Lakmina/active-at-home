@@ -31,9 +31,6 @@ function pre_initialize($database)
 
     foreach ($queries as $query) {
         if ($database->query($query) === TRUE) {
-            echo "Table created successfully.<br>";
-        } else {
-            echo "Error creating table: " . $database->error . "<br>";
         }
     }
 
@@ -58,6 +55,4 @@ function pre_initialize($database)
         ('Ann Blue', 'ann@ann.com', 'online', 'ISSA', 5),
         ('Peter Red', 'peter@peter.com', 'NW2, NW3', 'Level 4', 4)");
     }
-
-    echo "Database setup complete.";
 }
