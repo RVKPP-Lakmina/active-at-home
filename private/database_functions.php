@@ -1,24 +1,38 @@
 <?php
-require_once('credentials.php'); // Ensure credentials are available
+require_once('credentials.php');
 
-function db_connect()
+class Database
 {
-    try {
-        $database = new mysqli(DB_SERVER, DB_USER, DB_PASS);
-    } catch (Exception $e) {
-        die("Connection failed: " . $e->getMessage());
+    private $connection;
+
+    public function __construct()
+    {
+        $this->connect();
     }
 
-    if ($database->connect_errno) {
-        die("Connection failed: " . $database->connect_error);
+    private function connect()
+    {
+        try {
+            $this->connection = new mysqli(DB_SERVER, DB_USER, DB_PASS);
+            if ($this->connection->connect_errno) {
+                throw new Exception("Connection failed: " . $this->connection->connect_error);
+            }
+
+            // Create database if it doesn't exist
+            $this->connection->query("CREATE DATABASE IF NOT EXISTS " . DB_NAME);
+            $this->connection->select_db(DB_NAME);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
     }
 
-    // Create database if it doesn't exist
-    $db_name = DB_NAME;
-    $database->query("CREATE DATABASE IF NOT EXISTS $db_name");
+    public function getConnection()
+    {
+        return $this->connection;
+    }
 
-    // Now connect to the newly created database
-    $database->select_db($db_name);
-
-    return $database;
+    public function closeConnection()
+    {
+        $this->connection->close();
+    }
 }
